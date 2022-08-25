@@ -13,7 +13,7 @@ const register = async (req, res) => {
       httpOnly: true,
       // secure: process.env.NODE_ENV == "development",
       // secure: true,
-      // sameSite: "strict",
+      sameSite: "none",
       // origin: "http://localhost:3000",
       maxAge: 60 * 60 * 24 * 30 * 1000,
     })
@@ -44,7 +44,7 @@ const login = async (req, res) => {
       expires: new Date(Date.now() + 60 * 60 * 24 * 30 * 1000),
       // domain: "http://localhost:3000",
       // secure: true,
-      // sameSite: "none",
+      sameSite: "none",
       // maxAge: 60 * 60 * 24 * 30,
     })
     .json({ username: user.name });
@@ -55,6 +55,7 @@ const logout = async (req, res) => {
     .cookie("token", "user is out", {
       httpOnly: true,
       expires: new Date(Date.now() + 60 * 60 * 24 * 30),
+      sameSite: none,
     })
     .json({ msg: "user logged out" });
 };
