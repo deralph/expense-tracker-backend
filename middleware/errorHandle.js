@@ -15,7 +15,7 @@ const errorHandler = async (err, req, res, next) => {
     errObject.statusCode = StatusCodes.NOT_ACCEPTABLE;
   }
   // return res.status(errObject.statusCode).json({ msg: errObject.msg });
-  return res.status(errObject.statusCode).json({ err });
+  return res.status(errObject.statusCode).json({ errObject });
 };
 
 module.exports = errorHandler;
