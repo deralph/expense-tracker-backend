@@ -1,0 +1,61 @@
+const express = require("express");
+const app = express();
+const connectDB = require("./connect/connectDB");
+const errorHandler = require("./middleware/errorHandle");
+const notFound = require("./middleware/notFound");
+require("dotenv").config();
+require("express-async-errors");
+const authRouter = require("./routes/user");
+const expensesRouter = require("./routes/expenses");
+const authMiiddleware = require("./middleware/authorization");
+
+const helmet = require("helmet");
+const cors = require("cors");
+
+const cookieParser = require("cookie-parser");
+
+const {
+  appLimiter,
+  createAccountLimiter,
+} = require("./middleware/ratelimiter");
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["GET", "PATCH", "POST", "DELETE"],
+    allowedHeaders: ["content-type", "Authorization", "x-csrf-token", "cookie"],
+    credentials: true,
+    optionSuccessStatus: 200,
+  })
+);
+
+// app.set("trust proxy", 1);
+app.get("/ip", (request, response) => response.send(request.ip));
+app.use(appLimiter);
+app.use(express.json());
+app.use(helmet());
+
+// app.use(cors());
+
+app.use(cookieParser());
+
+app.get("/", (req, res) => {
+  res.send("fuck you");
+});
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/expenses", authMiiddleware, expensesRouter);
+app.use(errorHandler);
+app.use(notFound);
+
+const port = process.env.PORT || 5000;
+// const port = parseInt(process.env.PORT, 10) || 3000;
+
+const start = async () => {
+  try {
+    await connectDB(process.env.MONGO_URI);
+    app.listen(port, () => console.log(`server listening at port ${port}`));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+start();
