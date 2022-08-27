@@ -17,7 +17,7 @@ const register = async (req, res) => {
       // origin: "http://localhost:3000",
       maxAge: 60 * 60 * 24 * 30 * 1000,
     })
-    .json({ username: user.name });
+    .json({ username: user.name, isPosted: true, sucess: true });
 };
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -47,7 +47,7 @@ const login = async (req, res) => {
       sameSite: "none",
       // maxAge: 60 * 60 * 24 * 30,
     })
-    .json({ username: user.name });
+    .json({ username: user.name, isPosted: true, sucess: true });
 };
 const logout = async (req, res) => {
   return res
@@ -57,7 +57,7 @@ const logout = async (req, res) => {
       expires: new Date(Date.now() + 60 * 60 * 24 * 30),
       sameSite: none,
     })
-    .json({ msg: "user logged out" });
+    .json({ msg: "user logged out", sucess: true });
 };
 module.exports = {
   register,
