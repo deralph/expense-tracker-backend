@@ -36,7 +36,7 @@ app.use(
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", process.env.FRONTEND],
+    origin: process.env.FRONTEND,
     methods: ["GET", "PATCH", "POST", "DELETE"],
     allowedHeaders: ["content-type", "Authorization", "x-csrf-token", "cookie"],
     credentials: true,
