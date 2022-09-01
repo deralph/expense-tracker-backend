@@ -45,7 +45,7 @@ app.use(
 );
 
 app.get("/ip", (request, response) => response.send(request.ip));
-app.use(appLimiter);
+// app.use(appLimiter);
 app.use(express.json());
 app.use(helmet());
 
