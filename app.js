@@ -41,8 +41,6 @@ app.use(
     allowedHeaders: ["content-type", "Authorization", "x-csrf-token", "cookie"],
     credentials: true,
     optionSuccessStatus: 200,
-    sameSite: "none",
-    secure: true,
   })
 );
 

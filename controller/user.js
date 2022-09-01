@@ -12,7 +12,7 @@ const register = async (req, res) => {
     .cookie("token", token, {
       httpOnly: true,
       // secure: process.env.NODE_ENV == "development",
-      // secure: true,
+      secure: true,
       sameSite: "none",
       // origin: "http://localhost:3000",
       maxAge: 60 * 60 * 24 * 30 * 1000,
@@ -43,7 +43,7 @@ const login = async (req, res) => {
       httpOnly: true,
       expires: new Date(Date.now() + 60 * 60 * 24 * 30 * 1000),
       // domain: "http://localhost:3000",
-      // secure: true,
+      secure: true,
       sameSite: "none",
       // maxAge: 60 * 60 * 24 * 30,
     })
