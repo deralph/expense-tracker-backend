@@ -28,7 +28,7 @@ const updateExpense = async (req, res) => {
   const expense = await Expenses.findOneAndUpdate(
     { _id: expenseId, createdBy: userId },
     body,
-    { new: true, runValidator: true }
+    { new: true, runValidators: true }
   );
   res.status(StatusCodes.OK).json({ expense });
 };

@@ -12,13 +12,11 @@ const authMiiddleware = require("./middleware/authorization");
 
 const helmet = require("helmet");
 const cors = require("cors");
+const xss = require("xss-clean");
 
 const cookieParser = require("cookie-parser");
 
-const {
-  appLimiter,
-  createAccountLimiter,
-} = require("./middleware/ratelimiter");
+const { createAccountLimiter } = require("./middleware/ratelimiter");
 
 app.set("trust proxy", 1);
 
@@ -45,9 +43,9 @@ app.use(
 );
 
 app.get("/ip", (request, response) => response.send(request.ip));
-// app.use(appLimiter);
 app.use(express.json());
 app.use(helmet());
+app.use(xss());
 
 // app.use(cors());
 
@@ -62,7 +60,6 @@ app.use(errorHandler);
 app.use(notFound);
 
 const port = process.env.PORT || 5000;
-// const port = parseInt(process.env.PORT, 10) || 3000;
 
 const start = async () => {
   try {

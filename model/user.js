@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { serialize } = require("cookie");
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -39,12 +38,7 @@ userSchema.methods.createJWT = function () {
       expiresIn: process.env.JWT_LIFETIME,
     }
   );
-  // const serialized = serialize("cookieToken", token, {
-  //   httpOnly: true,
-  //   secure: process.env.NODE_ENV !== "development",
-  //   sameSite: "strict",
-  //   maxAge: 60 * 60 * 24 * 30,
-  // });
+
   return token;
 };
 

@@ -14,7 +14,6 @@ const errorHandler = async (err, req, res, next) => {
     errObject.msg = `The input entered in is not surported`;
     errObject.statusCode = StatusCodes.NOT_ACCEPTABLE;
   }
-  // return res.status(errObject.statusCode).json({ msg: errObject.msg });
   return res.status(errObject.statusCode).json({ errObject });
 };
 

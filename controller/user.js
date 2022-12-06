@@ -6,7 +6,6 @@ const register = async (req, res) => {
   const user = await User.create(req.body);
   const token = user.createJWT();
 
-  // res.setHeader("Set-Cookie", token);
   res
     .status(StatusCodes.ACCEPTED)
     .cookie("token", token, {
@@ -14,7 +13,6 @@ const register = async (req, res) => {
       // secure: process.env.NODE_ENV == "development",
       secure: true,
       sameSite: "none",
-      // origin: "http://localhost:3000",
       maxAge: 60 * 60 * 24 * 30 * 1000,
     })
     .json({ username: user.name, isPosted: true, sucess: true });
@@ -35,17 +33,13 @@ const login = async (req, res) => {
 
   const token = user.createJWT();
 
-  // res.setHeader("Set-Cookie", token);
   res
     .status(StatusCodes.ACCEPTED)
-    // .setHeader("Set-Cookie", token)
     .cookie("token", token, {
       httpOnly: true,
       expires: new Date(Date.now() + 60 * 60 * 24 * 30 * 1000),
-      // domain: "http://localhost:3000",
       secure: true,
       sameSite: "none",
-      // maxAge: 60 * 60 * 24 * 30,
     })
     .json({ username: user.name, isPosted: true, sucess: true });
 };
