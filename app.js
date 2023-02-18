@@ -13,11 +13,19 @@ const authMiiddleware = require("./middleware/authorization");
 const helmet = require("helmet");
 const cors = require("cors");
 const xss = require("xss-clean");
+const { createProxyMiddleware } = require("http-proxy-middleware");
 
 const cookieParser = require("cookie-parser");
 
 const { createAccountLimiter } = require("./middleware/ratelimiter");
 
+app.use(
+  "/api",
+  createProxyMiddleware({
+    target: process.env.FRONTEND,
+    changeOrigin: true,
+  })
+);
 app.set("trust proxy", 1);
 
 app.use(
