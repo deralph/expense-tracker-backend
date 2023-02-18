@@ -22,7 +22,7 @@ const { createAccountLimiter } = require("./middleware/ratelimiter");
 app.use(
   "/api",
   createProxyMiddleware({
-    target: process.env.FRONTEND,
+    target: "https://expense-tracked.netlify.app",
     changeOrigin: true,
   })
 );
@@ -42,7 +42,7 @@ app.use(
 
 app.use(
   cors({
-    origin: process.env.FRONTEND,
+    origin: "https://expense-tracked.netlify.app",
     methods: ["GET", "PATCH", "POST", "DELETE"],
     allowedHeaders: ["content-type", "Authorization", "x-csrf-token", "cookie"],
     credentials: true,
