@@ -40,15 +40,15 @@ app.use(
   })
 );
 
-app.use(
-  cors({
-    origin: "https://expense-tracked.netlify.app",
-    methods: ["GET", "PATCH", "POST", "DELETE"],
-    allowedHeaders: ["content-type", "Authorization", "x-csrf-token", "cookie"],
-    credentials: true,
-    optionSuccessStatus: 200,
-  })
-);
+// app.use(
+//   cors({
+//     origin: "https://expense-tracked.netlify.app",
+//     methods: ["GET", "PATCH", "POST", "DELETE"],
+//     allowedHeaders: ["content-type", "Authorization", "x-csrf-token", "cookie"],
+//     credentials: true,
+//     optionSuccessStatus: 200,
+//   })
+// );
 
 app.get("/ip", (request, response) => response.send(request.ip));
 app.use(express.json());
