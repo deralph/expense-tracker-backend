@@ -4,6 +4,7 @@ const User = require("../model/user");
 
 const register = async (req, res) => {
   const user = await User.create(req.body);
+  if (!user) throw new Unauthorized("username already exist");
   const token = user.createJWT();
 
   res
