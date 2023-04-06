@@ -1,6 +1,8 @@
-const { StatusCodes } = require("http-status-codes");
+import { StatusCodes } from "http-status-codes"
+import { Request, Response,NextFunction,ErrorRequestHandler } from "express";
 
-const errorHandler = async (err, req, res, next) => {
+
+const errorHandler = async (err:ErrorRequestHandler|any, req:Request, res:Response, next:NextFunction) => {
   const errObject = {
     statusCode: err.statusCode || 400,
     msg: err.message || "something went wrong please try again later",
@@ -17,4 +19,4 @@ const errorHandler = async (err, req, res, next) => {
   return res.status(errObject.statusCode).json({ errObject });
 };
 
-module.exports = errorHandler;
+export default errorHandler;

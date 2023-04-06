@@ -1,9 +1,12 @@
-const { StatusCodes } = require("http-status-codes");
-const { BadRequest, Unauthorized } = require("../error");
-const User = require("../model/user");
+import { StatusCodes } from "http-status-codes"
+import BadRequest from "../error/BadRequest";
+import Unauthorized from "../error/Unauthorized";
+import User, { Iuser } from "../model/user"
+import { Request, Response } from "express";
 
-const register = async (req, res) => {
-  const user = await User.create(req.body);
+
+const register = async (req:Request, res:Response) => {
+  const user = await User.createUser(req.body);
   if (!user) throw new Unauthorized("username already exist");
   const token = user.createJWT();
 
@@ -18,13 +21,13 @@ const register = async (req, res) => {
     })
     .json({ username: user.name, isPosted: true, sucess: true });
 };
-const login = async (req, res) => {
-  const { email, password } = req.body;
+const login = async (req:Request, res:Response) => {
+  const { email, password }:Iuser = req.body;
 
   if (!email || !password)
     throw new BadRequest("email and password can't be vacant");
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne(email);
 
   if (!user) throw new Unauthorized("invalid credentials");
 
@@ -44,7 +47,7 @@ const login = async (req, res) => {
     })
     .json({ username: user.name, isPosted: true, sucess: true });
 };
-const logout = async (req, res) => {
+const logout = async (req:Request, res:Response) => {
   return res
     .status(StatusCodes.ACCEPTED)
     .cookie("token", "user is out", {
@@ -55,7 +58,7 @@ const logout = async (req, res) => {
     })
     .json({ msg: "user logged out", sucess: true });
 };
-module.exports = {
+export default {
   register,
   login,
   logout,

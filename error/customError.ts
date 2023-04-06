@@ -1,7 +1,7 @@
 class customError extends Error {
-  constructor(message) {
+  constructor(message:string) {
     super(message);
   }
 }
 
-module.exports = customError;
+export default customError;

@@ -1,22 +1,22 @@
-const express = require("express");
-const app = express();
-const session = require("express-session");
-const connectDB = require("./connect/connectDB");
-const errorHandler = require("./middleware/errorHandle");
-const notFound = require("./middleware/notFound");
+import express,{ Request, Response } from "express"
+const app: express.Application = express();
+import session from "express-session"
+import connectDB from "./connect/connectDB"
+import errorHandler from "./middleware/errorHandle"
+import notFound from "./middleware/notFound"
 require("dotenv").config();
 require("express-async-errors");
-const authRouter = require("./routes/user");
-const expensesRouter = require("./routes/expenses");
-const authMiiddleware = require("./middleware/authorization");
+import authRouter from "./routes/user"
+import expensesRouter from "./routes/expenses"
+import authMiiddleware from "./middleware/authorization"
 
-const helmet = require("helmet");
-const cors = require("cors");
-const xss = require("xss-clean");
+import helmet from "helmet"
+import cors from "cors"
+// import xss from "xss-clean"
 
-const cookieParser = require("cookie-parser");
+import cookieParser from "cookie-parser"
 
-const { createAccountLimiter } = require("./middleware/ratelimiter");
+import createAccountLimiter  from "./middleware/ratelimiter"
 
 
 app.set("trust proxy", 1);
@@ -39,20 +39,19 @@ app.use(
     methods: ["GET", "PATCH", "POST", "DELETE"],
     allowedHeaders: ["content-type", "Authorization", "x-csrf-token", "cookie"],
     credentials: true,
-    optionSuccessStatus: 200,
   })
 );
 
-app.get("/ip", (request, response) => response.send(request.ip));
+app.get("/ip", (request:Request, response:Response) => response.send(request.ip));
 app.use(express.json());
 app.use(helmet());
-app.use(xss());
+// app.use(xss());
 
 // app.use(cors());
 
 app.use(cookieParser());
 
-app.get("/", (req, res) => {
+app.get("/", (req:Request, res:Response) => {
   res.send("fuck you");
 });
 app.use("/api/v1/auth", authRouter);
@@ -64,7 +63,7 @@ const port = process.env.PORT || 5000;
 
 const start = async () => {
   try {
-    await connectDB(process.env.MONGO_URI);
+    await connectDB(process.env.MONGO_URI!);
     app.listen(port, () => console.log(`server listening at port ${port}`));
   } catch (error) {
     console.log(error);

@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import mongoose, { Schema, model } from "mongoose";
 
-const ExpenseSchema = new mongoose.Schema(
+const ExpenseSchema = new Schema(
   {
     productName: {
       type: String,
@@ -43,7 +43,7 @@ const ExpenseSchema = new mongoose.Schema(
       ref: "user",
     },
   },
-  { timeStamps: true }
+  {  timestamps: { createdAt: "createAt", updatedAt: "updateAt" }, }
 );
 
-module.exports = mongoose.model("Expenses", ExpenseSchema);
+export default model("Expenses", ExpenseSchema);
