@@ -17,6 +17,7 @@ import cors from "cors"
 import cookieParser from "cookie-parser"
 
 import createAccountLimiter  from "./middleware/ratelimiter"
+import sendMail from "./controller/sendemail";
 
 
 app.set("trust proxy", 1);
@@ -56,6 +57,7 @@ app.get("/", (req:Request, res:Response) => {
 });
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/expenses", authMiiddleware, expensesRouter);
+app.use("/api/v1/sendmail", sendMail);
 app.use(errorHandler);
 app.use(notFound);
 

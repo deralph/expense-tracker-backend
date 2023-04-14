@@ -6,7 +6,7 @@ import { Request, Response } from "express";
 
 
 const register = async (req:Request, res:Response) => {
-  const user = await User.createUser(req.body);
+  const user = await User.create(req.body);
   if (!user) throw new Unauthorized("username already exist");
   const token = user.createJWT();
 
@@ -23,15 +23,19 @@ const register = async (req:Request, res:Response) => {
 };
 const login = async (req:Request, res:Response) => {
   const { email, password }:Iuser = req.body;
+  console.log({ email, password })
 
-  if (!email || !password)
+  if (!email || !password){
+  console.log('it happened here')
     throw new BadRequest("email and password can't be vacant");
-
-  const user = await User.findOne(email);
+}
+  const user = await User.findOne({email});
+  console.log(user)
 
   if (!user) throw new Unauthorized("invalid credentials");
 
   const checkPassword = await user.checkPassword(password);
+  console.log(checkPassword)
 
   if (!checkPassword) throw new Unauthorized("invalid credentials");
 

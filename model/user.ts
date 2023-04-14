@@ -2,6 +2,7 @@ import  { Schema, model } from "mongoose";
 
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
+import Unauthorized from "../error/Unauthorized";
 
 export interface Iuser {
   name?: string;
@@ -10,14 +11,23 @@ export interface Iuser {
   createdAt?: Date;
 }
 
+interface res{
+  _id: string
+    name: string
+    email: string
+    password: string
+    createdAt: string
+    __v?: number
+}
 export interface IuserModel extends Iuser {
-  checkPassword: (comparedPassword: String) => Boolean;
-  createJWT: () => String;
+  // findByCredentials: (email: String,password:string) => any;
+  checkPassword: (comparedPassword:string) => boolean;
+  createJWT: () => string;
   createUser: (body: Iuser) => any;
   findOne: (email:string) => any;
    }
 
-const userSchema = new Schema<Iuser>({
+const userSchema:Schema<IuserModel> = new Schema({
   name: {
     type: String,
     required: true,
@@ -64,11 +74,11 @@ userSchema.methods.checkPassword = async function (comparedPassword:string) {
   return isMatch;
 };
 
-userSchema.statics.createUser = async function (body: Iuser) {
+userSchema.methods.createUser = async function (body: Iuser) {
   return await this.create(body);
 };
-userSchema.statics.findOne = async function (email:string) {
+userSchema.methods.findOne = async function (email:string) {
   return await this.find({email});
 };
 
-export default model<Iuser,IuserModel>("Users", userSchema);
+export default model("Users", userSchema);

@@ -18,7 +18,7 @@ const GetAllExpenses = async (req:Request, res:Response) => {
   }
   res
     .status(StatusCodes.OK)
-    .json({ expenses, count: expenses.length, user: username });
+    .json({ expenses, count: expenses.length, user: username,userId });
 };
 const createExpense = async (req:Request, res:Response) => {
   req.body.createdBy = (req as Decoded).user.userId;
