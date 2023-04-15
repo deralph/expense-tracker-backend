@@ -62,8 +62,22 @@ const logout = async (req:Request, res:Response) => {
     })
     .json({ msg: "user logged out", sucess: true });
 };
+const Delete = async (req:Request, res:Response) => {
+
+  const expense = await User.findByIdAndDelete({
+    _id: req.params.userId
+  });
+
+  if (!expense) {
+    throw new BadRequest(`there is no expense with the id : ${req.body.userId}`);
+  }
+  res.status(StatusCodes.OK).json({ message: "User deleted" });
+
+  
+};
 export default {
   register,
   login,
   logout,
+  Delete
 };
