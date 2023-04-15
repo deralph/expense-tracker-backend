@@ -1,0 +1,4 @@
+WT_LIFETIME='your value'
+JWT_SECRET='your secret'
+MONGO_URI='your mong connect uri'
+FRONTEND=http://localhost:3000

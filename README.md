@@ -1,3 +1,8 @@
 # expense-tracker-backend
 
-this a repo from my expense tracker fullstack repo 
+## This is the server side repo of the repo below
+
+```sh
+ https://github.com/deralph/expense-tracker-frontend.git
+
+```
